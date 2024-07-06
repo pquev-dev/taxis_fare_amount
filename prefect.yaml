@@ -1,0 +1,36 @@
+# Welcome to your prefect.yaml file! You can use this file for storing and managing
+# configuration for deploying your flows. We recommend committing this file to source
+# control along with your flow code.
+
+# Generic metadata about this project
+name: taxis
+prefect-version: 2.19.7
+
+# build section allows you to manage and build docker images
+build: null
+
+# push section allows you to manage if and how this project is uploaded to remote locations
+push: null
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+- prefect.deployments.steps.set_working_directory:
+    directory: /Users/patricioquevedo/Documents/machine learning/taxis
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+- name: demo
+  version: null
+  tags: []
+  description: null
+  entrypoint: main.py:main_flow
+  parameters: {}
+  work_pool:
+    name: test
+    work_queue_name: null
+    job_variables: {}
+  schedules:
+  - interval: 3600.0
+    anchor_date: '2024-07-05T23:59:18.482418+00:00'
+    timezone: UTC
+    active: false
