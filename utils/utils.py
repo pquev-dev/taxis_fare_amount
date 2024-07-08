@@ -29,6 +29,19 @@ def split_data(X : pd.DataFrame, y : pd.Series)->dict:
     
     return split_data
 
+def add_features_date(self,data : pd.DataFrame,date_column : str)->pd.DataFrame:
+    '''Agergar nuevas columnas a partir de la fecha'''
+    data[date_column] = pd.to_datetime(data[date_column])
+
+    #new columns 
+    data['hour'] = data[date_column].dt.hour
+    data['day'] = data[date_column].dt.day
+    data['dayofweek'] = data[date_column].dt.dayofweek
+    data['dayofyear'] = data[date_column].dt.dayofyear
+    data['month'] = data[date_column].dt.month
+    data['quarter'] = data[date_column].dt.quarter
+
+    return data
 
 def save_pickle(data,filename : str)->None:
     """
