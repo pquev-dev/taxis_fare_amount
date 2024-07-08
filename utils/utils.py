@@ -43,6 +43,10 @@ def add_features_date(self,data : pd.DataFrame,date_column : str)->pd.DataFrame:
 
     return data
 
+def select_features_target(self, data,features,target)->dict:
+    dict_data = {'features' : data[features],'target' : data[target] }
+    return dict_data
+
 def save_pickle(data,filename : str)->None:
     """
     Esta funcion guarda el modelo en formato pkl.

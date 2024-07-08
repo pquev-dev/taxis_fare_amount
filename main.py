@@ -15,7 +15,6 @@ def processing_data():
     data_processing = DataProcesing(data)
     data_processing.run()
     
-
 @task(
     retries=3,
     retry_delay_seconds = 2,

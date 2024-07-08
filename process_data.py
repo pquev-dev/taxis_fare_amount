@@ -1,5 +1,7 @@
 import pandas as pd 
 import numpy as np
+from utils.utils import add_features_date,select_features_target
+from config import FEATURES,TARGET
 
 class DataProcesing():
 
@@ -11,7 +13,9 @@ class DataProcesing():
         """
         Eliminar valores en 0
         """
-        return data[data['fare_amount']>0]
+        data = data[data['passenger_count']>0]
+        data = data[data['fare_amount']>0]
+        return data
 
     def clear_nan_values(self,data : pd.DataFrame)->pd.DataFrame:
         """
@@ -41,8 +45,6 @@ class DataProcesing():
             data[f"outlier_{i}"] = 0
             data.loc[(data[i]<down_limit) or (data[i]>up_limit),f"outlier_{i}"] = 1
 
-
-
     def run(self,):
         """
         funcion principal de proceso de datos
@@ -52,8 +54,9 @@ class DataProcesing():
 
             data_to_process = self.clear_nan_values(data_to_process)
             data_to_process = self.clear_zero_values(data_to_process)
-            print(data_to_process)
-
+            data_to_process = add_features_date(self,data=data_to_process,date_column='key')
+            data_to_process.to_pickle('./data/process_final_data.pkl')            
+        
         except Exception as err:
             print(f"error en la ejecucion de limpieza : {err}")
 
