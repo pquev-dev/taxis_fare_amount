@@ -1,4 +1,5 @@
 import pandas as pd 
+import numpy as np
 import os
 import pickle
 from config import *
@@ -29,7 +30,11 @@ def split_data(X : pd.DataFrame, y : pd.Series)->dict:
     
     return split_data
 
-def add_features_date(self,data : pd.DataFrame,date_column : str)->pd.DataFrame:
+def calculate_distance(x1,y1,x2,y2):
+        distance = np.sqrt((x2 - x1 )**2 + (y2 - y1)**2)
+        return distance
+
+def add_features_date(data : pd.DataFrame,date_column : str)->pd.DataFrame:
     '''Agergar nuevas columnas a partir de la fecha'''
     data[date_column] = pd.to_datetime(data[date_column])
 
@@ -43,7 +48,7 @@ def add_features_date(self,data : pd.DataFrame,date_column : str)->pd.DataFrame:
 
     return data
 
-def select_features_target(self, data,features,target)->dict:
+def select_features_target(data,features,target)->dict:
     dict_data = {'features' : data[features],'target' : data[target] }
     return dict_data
 

@@ -9,7 +9,7 @@ TEST_PATH_DATA = "./data/collect_data/test.csv"
 SAVE_MODEL_PATH = "./model"
 
 #model 
-FEATURES = ['passenger_count','hour','day','dayofweek','dayofyear','month','quarter']
+FEATURES = ['passenger_count','hour','day','dayofweek','dayofyear','month','quarter','disntance']
 TARGET = "fare_amount"
 MODELS = ['xgboost','rf','lrg']
 TEST_SIZE = 0.25

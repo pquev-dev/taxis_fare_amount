@@ -1,6 +1,6 @@
 import pandas as pd 
 import numpy as np
-from utils.utils import add_features_date,select_features_target
+from utils.utils import add_features_date,select_features_target,calculate_distance
 from config import FEATURES,TARGET
 
 class DataProcesing():
@@ -44,6 +44,7 @@ class DataProcesing():
 
             data[f"outlier_{i}"] = 0
             data.loc[(data[i]<down_limit) or (data[i]>up_limit),f"outlier_{i}"] = 1
+    
 
     def run(self,):
         """
@@ -54,7 +55,14 @@ class DataProcesing():
 
             data_to_process = self.clear_nan_values(data_to_process)
             data_to_process = self.clear_zero_values(data_to_process)
-            data_to_process = add_features_date(self,data=data_to_process,date_column='key')
+            data_to_process = add_features_date(data=data_to_process,date_column='key')
+            #agregar columna de distancia
+            data_to_process['distance'] = data_to_process.apply(
+                calculate_distance(data_to_process.pickup_latitude,
+                                   data_to_process.pickup_longitude,
+                                   data_to_process.dropoff_latitude,
+                                   data_to_process.dropoff_longitude)
+            )
             data_to_process.to_pickle('./data/process_final_data.pkl')            
         
         except Exception as err:
